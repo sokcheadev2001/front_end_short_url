@@ -13,7 +13,8 @@
 body {
   min-height: 100vh;
   color: #374151;
-  background: #f4f4f4;
+  background: rgb(7, 140, 142);
+  background: linear-gradient(135deg, rgba(7, 140, 142, 1) 0%, rgba(9, 113, 5, 1) 65%);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,

@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Navbar from '@/components/header/navbar-component.vue'
 </script>
 
 <template>
   <header>
-    <div class="bg-white border border-b-gray-200">
+    <div class="">
       <div class="container mx-auto py-5 flex justify-between items-center">
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="60" height="60" />
+        <RouterLink to="/">
+          <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="60" height="60" />
+        </RouterLink>
         <div class="wrapper">
-          <nav class="">
-            <RouterLink to="/" class="p-5">Home</RouterLink>
-            <RouterLink to="/about" class="p-5">About</RouterLink>
-          </nav>
+          <Navbar />
         </div>
       </div>
     </div>
