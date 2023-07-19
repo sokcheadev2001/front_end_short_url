@@ -15,13 +15,6 @@ const short_url = ref('')
     <form @submit.prevent="submit">
       <h1 class="text-4xl font-bold mb-5 text-center text-green-600">Shorten your link</h1>
       <div class="mb-4 flex">
-        <!-- <input
-          type="text"
-          class="w-full bg-gray-200 appearance-none border-2 border-gray-200 py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
-          name="short_url"
-          placeholder="Enter long url here"
-          v-model="short_url"
-        /> -->
         <Input
           type="text"
           className="w-full bg-gray-200 appearance-none border-2 border-gray-200 py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-green-500"
