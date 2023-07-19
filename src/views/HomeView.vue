@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Button from '@/components/button/button-component.vue'
 import Input from '@/components/form-input/input-component.vue'
-
 import { ref } from 'vue'
 
 function submit() {
