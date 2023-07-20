@@ -8,7 +8,7 @@ import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
 
-if (user) router.push('/')
+if (user.token) router.push('/')
 
 const userData = reactive({
   username: '',
@@ -39,11 +39,8 @@ async function submit() {
       })
       if (response.ok === true) {
         const data = await response.json()
-        console.log(data.user.accessToken)
-        localStorage.setItem('user', JSON.stringify(data.user))
-        window.location.href = '/'
-        userData.email = ''
-        userData.password = ''
+        user.token = data.accessToken
+        router.push('/')
       }
     }
   } catch (error) {
