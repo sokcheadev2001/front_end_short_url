@@ -3,7 +3,7 @@ import Button from '@/components/button/button-component.vue'
 import Input from '@/components/form-input/input-component.vue'
 import { RouterLink } from 'vue-router'
 import { reactive } from 'vue'
-import { user } from '@/shared/user/user'
+import { setToken, user } from '@/shared/user/user'
 import router from '@/router'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
@@ -41,7 +41,7 @@ async function submit() {
       })
       if (response.ok === true) {
         const data = await response.json()
-        localStorage.setItem('token', JSON.stringify(data.accessToken))
+        setToken(data.accessToken)
         router.push('/')
       }
     }

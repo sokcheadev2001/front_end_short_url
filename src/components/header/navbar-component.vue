@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-import { user } from '@/shared/user/user'
+import { removeToken, user } from '@/shared/user/user'
 import router from '@/router'
 
 function handleLogout() {
-  user.token = ''
+  removeToken()
   router.push('/')
 }
-console.log(user)
 </script>
 <template>
   <nav class="bg-green-500 py-2 text-white rounded-md">

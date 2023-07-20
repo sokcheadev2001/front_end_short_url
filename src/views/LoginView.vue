@@ -2,7 +2,7 @@
 import Button from '@/components/button/button-component.vue'
 import Input from '@/components/form-input/input-component.vue'
 import { RouterLink } from 'vue-router'
-import { user } from '@/shared/user/user'
+import { setToken, user } from '@/shared/user/user'
 import router from '@/router'
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
@@ -37,9 +37,10 @@ async function submit() {
           password: userData.password
         })
       })
+      console.log(response)
       if (response.ok === true) {
         const data = await response.json()
-        user.token = data.accessToken
+        setToken(data.accessToken)
         router.push('/')
       }
     }
