@@ -37,7 +37,7 @@ async function submit() {
           password: userData.password
         })
       })
-      console.log(response)
+     
       if (response.ok === true) {
         const data = await response.json()
         setToken(data.accessToken)
