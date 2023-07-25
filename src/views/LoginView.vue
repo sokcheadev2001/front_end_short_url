@@ -7,6 +7,7 @@ import router from '@/router'
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
+import { toast } from 'vue3-toastify'
 
 if (user.token) router.push('/')
 
@@ -27,21 +28,30 @@ async function submit() {
   try {
     const validated = await v$.value.$validate()
     if (validated) {
-      const response = await fetch(import.meta.env.VITE_API_URL + '/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: userData.email,
-          password: userData.password
-        })
-      })
-     
+      const response = await toast.promise(
+        fetch(import.meta.env.VITE_API_URL + '/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: userData.email,
+            password: userData.password
+          })
+        }),
+        {
+          pending: 'Please wait...',
+          error: 'Something went wrong',
+          success: 'Logged In!'
+        }
+      )
+
       if (response.ok === true) {
         const data = await response.json()
         setToken(data.accessToken)
-        router.push('/')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
       }
     }
   } catch (error) {

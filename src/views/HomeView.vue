@@ -5,13 +5,15 @@ import { user } from '@/shared/user/user'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { computed, ref } from 'vue'
+import { toast } from 'vue3-toastify'
 
 const long_url = ref('')
 const short_url = ref('')
 
 const rules = computed(() => ({
   long_url: {
-    required
+    required,
+    $lazy: true
   }
 }))
 
@@ -21,19 +23,27 @@ async function submit() {
   try {
     const validated = await v$.value.$validate()
     if (validated) {
-      const response = await fetch(import.meta.env.VITE_API_URL + '/links', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`
-        },
-        body: JSON.stringify({
-          long_url: long_url.value
-        })
-      })
+      const response = await toast.promise(
+        fetch(import.meta.env.VITE_API_URL + '/links', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          },
+          body: JSON.stringify({
+            long_url: long_url.value
+          })
+        }),
+        {
+          pending: 'Please wait...',
+          error: 'Something went wrong',
+          success: 'Url Shortened Success!'
+        }
+      )
       if (response.ok === true) {
         const data = await response.json()
         short_url.value = import.meta.env.VITE_API_URL + '/' + data.short_url
+        v$.value.$reset()
       }
     }
   } catch (error) {
@@ -43,6 +53,13 @@ async function submit() {
 
 async function copyText() {
   await navigator.clipboard.writeText(short_url.value)
+  toast.success('Coppied to clipboard!', {
+    autoClose: 2000
+  })
+}
+function clearUrl() {
+  short_url.value = ''
+  long_url.value = ''
 }
 </script>
 
@@ -75,6 +92,9 @@ async function copyText() {
       <span class="text-red-600" v-for="err in v$.long_url.$errors" :key="err.$uid">
         {{ err.$message }}
       </span>
+      <div class="flex justify-center">
+        <Button v-if="short_url !== ''" text="Short another url" type="button" @click="clearUrl" />
+      </div>
     </form>
     <p class="mt-4 text-center max-w-xl mx-auto">
       ShortURL is a free tool to shorten URLs and generate short links URL shortener allows to

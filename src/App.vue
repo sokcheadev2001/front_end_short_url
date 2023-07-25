@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from '@/components/header/navbar-component.vue'
+import 'vue3-toastify/dist/index.css'
 </script>
 
 <template>

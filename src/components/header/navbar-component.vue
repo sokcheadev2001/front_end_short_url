@@ -2,10 +2,16 @@
 import { RouterLink } from 'vue-router'
 import { removeToken, user } from '@/shared/user/user'
 import router from '@/router'
+import { toast } from 'vue3-toastify'
 
 function handleLogout() {
   removeToken()
-  router.push('/')
+  toast.success('Logged out!', {
+    autoClose: 2000
+  })
+  setTimeout(() => {
+    router.push('/login')
+  }, 2000)
 }
 </script>
 <template>

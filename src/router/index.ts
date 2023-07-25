@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { user } from '@/shared/user/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +8,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      beforeEnter: (to, from) => {
+        if (to.name === 'home' && user.token) {
+          return true
+        } else {
+          return '/login'
+        }
+      }
     },
     {
       path: '/register',
@@ -21,6 +29,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/myurl',
+      name: 'myurl',
+      component: () => import('../views/MyUrlView.vue')
     }
   ]
 })
