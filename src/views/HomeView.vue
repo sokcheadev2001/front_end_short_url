@@ -6,6 +6,7 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { computed, ref } from 'vue'
 import { toast } from 'vue3-toastify'
+import { copyText } from '@/helper/clipboard'
 
 const long_url = ref('')
 const short_url = ref('')
@@ -51,12 +52,6 @@ async function submit() {
   }
 }
 
-async function copyText() {
-  await navigator.clipboard.writeText(short_url.value)
-  toast.success('Coppied to clipboard!', {
-    autoClose: 2000
-  })
-}
 function clearUrl() {
   short_url.value = ''
   long_url.value = ''
@@ -86,7 +81,7 @@ function clearUrl() {
             readonly
             v-model="short_url"
           />
-          <Button text="Copy" type="button" @click="copyText" />
+          <Button text="Copy" type="button" @click="copyText(short_url)" />
         </div>
       </div>
       <span class="text-red-600" v-for="err in v$.long_url.$errors" :key="err.$uid">

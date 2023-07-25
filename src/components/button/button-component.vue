@@ -14,6 +14,6 @@ defineProps({
     :class="className"
     :type="type"
   >
-    {{ text }}
+    <slot>{{ text }}</slot>
   </button>
 </template>

@@ -33,7 +33,14 @@ const router = createRouter({
     {
       path: '/myurl',
       name: 'myurl',
-      component: () => import('../views/MyUrlView.vue')
+      component: () => import('../views/MyUrlView.vue'),
+      beforeEnter: (to, from) => {
+        if (to.name === 'myurl' && user.token) {
+          return true
+        } else {
+          return '/login'
+        }
+      }
     }
   ]
 })
